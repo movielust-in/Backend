@@ -1,0 +1,34 @@
+@server = http://localhost:5000
+@token = Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImFudXJhZ3BwYXJtYXJAZ21haWwuY29tIiwiaWF0IjoxNjU0MzE5MDA5LCJleHAiOjE2NTU2MTUwMDksImlzcyI6IkFudXJhZyJ9.PdyXI2Rp61b3_skRCrWeSnSzQgJf3cjCti3rWliMzBA
+@appjson = application/json
+
+POST {{server}}/v1/auth/register
+Content-Type: {{appjson}}
+
+{
+
+}
+
+###
+GET {{server}}/v1/
+
+###
+POST {{server}}/v1/user/watchlist/add
+
+{
+
+}
+
+###
+GET https://movielust-api.herokuapp.com/v1
+
+###
+POST {{server}}/v1/auth/verifyemailotp
+
+{
+    "name": "Anurag",
+    "email": "01anuragparmar@gmail.com"
+}
+
+###@@
+###

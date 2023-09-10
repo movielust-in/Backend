@@ -1,0 +1,39 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+flask = "*"
+flask-talisman = "*"
+flask-wtf = "*"
+flask-cors = "*"
+python-dotenv = "*"
+flask-compress = "*"
+pyjwt = "*"
+pymongo = {extras = ["srv"], version = "*"}
+requests = "*"
+pytz = "*"
+flask-mail = "*"
+beautifulsoup4 = "*"
+lxml = "*"
+flask-swagger = "*"
+pre-commit = "*"
+flake8 = "*"
+marshmallow = "*"
+pandas = "*"
+redis = "*"
+gunicorn = "*"
+imagekitio = "*"
+sentry-sdk = {extras = ["flask"], version = "*"}
+
+[dev-packages]
+autopep8 = "*"
+pylint = "*"
+black = "*"
+
+[requires]
+python_version = "3.10"
+
+[pipenv]
+allow_prereleases = true

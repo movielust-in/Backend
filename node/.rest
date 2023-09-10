@@ -1,0 +1,141 @@
+@hostname = http://localhost
+@port = 3001
+@host = {{hostname}}:{{port}}
+@contentType = application/json
+
+GET {{host}}/avatar/getall
+
+###
+POST  {{host}}/auth/signup
+content-type: application/json
+
+{
+    
+    "email": "01aagparmar@gmail.com",
+    "name": "Nitin",
+    "password":"helloworld",
+    "profile":"iamgroot"
+}
+
+
+###
+GET  {{host}}/auth/login
+content-type: application/json
+
+{
+    "email": "01aagparmar@gmail.com",
+    "password":"helloworld"
+}
+
+
+
+###
+POST  {{host}}/auth/resetpassword
+content-type: application/json
+
+{
+    "email": "mnitn2311@gmail.com",
+    "otp":"364982",
+    "password":"groot",
+    "type":"resetpassword"
+}
+###
+POST {{host}}/auth/sendotp 
+content-type: application/json
+
+{
+    "email": "mnitin2311@gmail.com",
+    "name": "Nitin Mishra",
+    "type":"resetpassword"
+}
+###
+POST {{host}}/auth/verifyotp 
+content-type: application/json
+
+{
+    "email": "w@gmail.com",
+    "otp": "772717",
+    "type":"SIGNUP"
+}
+
+
+//Admin
+###
+GET {{host}}/user/update/avatar
+content-type: application/json
+
+{
+    "header": "mnitin2311@gmail.com"
+}
+
+###
+GET {{host}}/movie/imdbrating
+content-type: application/json
+
+{
+    "id": "mnitin2311@gmail.com"
+}
+
+###
+GET {{host}}/movie/imdbratings
+content-type: application/json
+
+{
+    "id": "mnitin2311@gmail.com"
+}
+###
+POST  {{host}}/user/addWatched
+content-type: application/json
+
+{
+    "content_id": "66732",
+    "email":"mnitin2311@gmail.com",
+    "type":"tv",
+    "season":"1",
+    "episode":"1"
+}
+
+###
+GET {{host}}/movie/imdbratings
+content-type: application/json
+
+{
+    "id":"tt0020978,tt0020971"
+}
+
+
+###
+POST  {{host}}/user/deleteWatched
+content-type: application/json
+
+{
+    "email":"mnitin2311@gmail.com",
+    "content_id":"436270"
+}
+
+###
+GET {{host}}/torrent/movie/yts/tt0468569/1h55
+###
+GET {{host}}/torrent/tv/andor/1/4
+###
+GET  {{host}}/admin/movies/all
+
+###
+POST  {{host}}/admin/movie/insert
+content-type: application/json
+
+{
+    "id":"15917"
+}
+
+
+
+
+###
+POST   {{host}}/auth/admin/login
+content-type: application/json
+
+{
+    "userName": "meAnurag",
+    "password":"movielust@1810"
+}

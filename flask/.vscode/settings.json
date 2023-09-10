@@ -1,0 +1,15 @@
+{
+  "editor.formatOnSave": true,
+  "editor.renderWhitespace": "all",
+  "python.analysis.typeCheckingMode": "off",
+  "python.formatting.provider": "none",
+  "python.linting.pylintEnabled": true,
+  "rest-client.defaultHeaders": {
+    "User-Agent": "vscode-restclient",
+    "Content-Type": "application/json"
+  },
+  "python.linting.enabled": true,
+  "[python]": {
+    "editor.defaultFormatter": "ms-python.black-formatter"
+  }
+}
