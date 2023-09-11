@@ -7,7 +7,8 @@ from flask import Blueprint, jsonify
 from imagekitio import ImageKit
 
 from .torrent import torrents as torrent_blueprint
-from .admin import adminroutes as admin_blueprint
+
+# from .admin import adminroutes as admin_blueprint
 
 
 load_dotenv()
@@ -18,9 +19,9 @@ routes.register_blueprint(
     torrent_blueprint, url_prefix="/torrent"
 )
 
-routes.register_blueprint(
-    admin_blueprint, url_prefix="/admin"
-)
+# routes.register_blueprint(
+# admin_blueprint, url_prefix="/admin"
+# )
 
 imdb_ratings = None
 
