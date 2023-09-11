@@ -2,8 +2,6 @@ from os import environ
 from marshmallow import EXCLUDE, Schema, validate
 from marshmallow.fields import (
     String,
-    Integer,
-    Boolean,
 )
 
 
@@ -28,42 +26,6 @@ class Env(Schema):
         required=True,
         error_messages={
             "required": "TMDB_KEY variable is not configured"
-        },
-    )
-    MAIL_SERVER = String(
-        required=True,
-        error_messages={
-            "required": "MAIL_SERVER variable is not configured"
-        },
-    )
-    MAIL_EMAIL = String(
-        required=True,
-        error_messages={
-            "required": "MAIL_EMAIL variable is not configured"
-        },
-    )
-    MAIL_PASSWORD = String(
-        required=True,
-        error_messages={
-            "required": "MAIL_PASSWORD variable is not configured"
-        },
-    )
-    MAIL_PORT = Integer(
-        required=True,
-        error_messages={
-            "required": "MAIL_PORT variable is not configured"
-        },
-    )
-    MAIL_USE_SSL = Boolean(
-        required=True,
-        error_messages={
-            "required": "MAIL_USE_SSL variable is not configured"
-        },
-    )
-    MAIL_USE_TLS = Boolean(
-        required=True,
-        error_messages={
-            "required": "MAIL_USE_TLS variable is not configured"
         },
     )
     DATABASE_URL = String(

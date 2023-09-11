@@ -6,13 +6,6 @@ from dotenv import load_dotenv
 from flask import Blueprint, jsonify
 from imagekitio import ImageKit
 
-from .health import health as health_blueprint
-from .auth import auth as auth_blueprint
-from .avtars import avatars as avatars_blueprint
-from .user import users as users_blueprint
-from .watchlist import (
-    watchlist as watchlist_blueprint,
-)
 from .torrent import torrents as torrent_blueprint
 from .admin import adminroutes as admin_blueprint
 
@@ -21,24 +14,6 @@ load_dotenv()
 
 routes = Blueprint("Routes", __name__)
 
-routes.register_blueprint(health_blueprint)
-
-routes.register_blueprint(
-    auth_blueprint, url_prefix="/auth"
-)
-
-routes.register_blueprint(
-    users_blueprint, url_prefix="/user"
-)
-
-routes.register_blueprint(
-    avatars_blueprint, url_prefix="/avatar"
-)
-
-routes.register_blueprint(
-    watchlist_blueprint, url_prefix="/user"
-)
-
 routes.register_blueprint(
     torrent_blueprint, url_prefix="/torrent"
 )
@@ -46,7 +21,6 @@ routes.register_blueprint(
 routes.register_blueprint(
     admin_blueprint, url_prefix="/admin"
 )
-
 
 imdb_ratings = None
 
@@ -77,6 +51,7 @@ try:
             imdb_ratings = pd.read_csv(
                 rating_file, sep="\t", header=0
             )
+
 except Exception as e:
     print(e)
     print(

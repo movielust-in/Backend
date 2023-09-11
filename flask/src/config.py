@@ -23,16 +23,6 @@ class BaseConfig(object):
     LOG_INFO_FILE = path.join(
         basedir, "log", "info.log"
     )
-    MAIL_SERVER = environ.get("MAIL_SERVER")
-    MAIL_PORT = int(environ.get("MAIL_PORT"))
-    MAIL_USERNAME = environ.get("MAIL_EMAIL")
-    MAIL_PASSWORD = environ.get("MAIL_PASSWORD")
-    MAIL_DEFAULT_SENDER = environ.get(
-        "MAIL_EMAIL"
-    )
-    MAIL_DEBUG = False
-    MAIL_USE_TLS = False
-    MAIL_USE_SSL = True
 
 
 class Development(BaseConfig):
