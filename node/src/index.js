@@ -3,15 +3,15 @@ import morgan from "morgan";
 import helmet from "helmet";
 import dotenv from "dotenv";
 import express, { json } from "express";
-import { connect, set as mongooseSet } from "mongoose";
 
-import { transporter } from "./helpers/nodemailer.js";
+import { verifyTransport } from "./helpers/nodemailer.js";
 import mainRouter from "./routes/routes.js";
 import flaskProxy from "./middlewares/flask-proxy.middleware.js";
-
-const PORT = process.env.PORT || 3001;
+import { connectDB } from "./helpers/db.js";
 
 dotenv.config();
+
+const PORT = process.env.PORT || 3001;
 
 const app = express();
 
@@ -26,25 +26,13 @@ app.use(mainRouter);
 app.use("/flask", flaskProxy);
 
 app.use("/", (req, res) => {
-  res.status(200).send({ success: "Server is running" });
+  res.status(200).send({ status: "Server is running" });
 });
 
-try {
-  mongooseSet("strictQuery", false);
-  await connect(process.env.DATABASE_URL);
-  console.log("Database connected.");
-} catch (err) {
-  console.log("Database error.", err);
-  throw new Error(err);
-}
+await connectDB();
 
-try {
-  await transporter.verify();
-  console.log("Mail server verified.");
-} catch (err) {
-  console.log("Mail server error:", err);
-  throw new Error(err);
-}
+await verifyTransport();
+
 
 app
   .listen(PORT, () => {

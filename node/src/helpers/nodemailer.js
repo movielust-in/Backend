@@ -32,3 +32,19 @@ export const sendMail = (to, htmlToSend, subject) => {
     });
   });
 };
+
+export const verifyTransport = async () =>
+
+  new Promise((resolve) => {
+    (async () => {
+      try {
+        await transporter.verify();
+        console.log("Mail server verified.");
+        resolve();
+      } catch (err) {
+        console.log("Mail server error:", err);
+        throw new Error(err);
+      }
+    })();
+  })
+
