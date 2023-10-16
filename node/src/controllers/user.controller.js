@@ -2,7 +2,7 @@ import { AvatarModel, UserModel } from "../models/user.model.js";
 
 export const getUserProfile = async (req, res) => {
   try {
-    let user_id = req.user.email;
+    const user_id = req.user.email;
 
     const user = await UserModel.findOne({ email: user_id });
 
@@ -58,7 +58,7 @@ export const deleteuser = async (req, res) => {
 export const getWatched = async (req, res) => {
   try {
     // console.log("Get Watched");
-    let user_email = req.user.email;
+    const user_email = req.user.email;
 
     const watched_obj = await UserModel.findOne({ email: user_email });
 
@@ -73,18 +73,18 @@ export const getWatched = async (req, res) => {
 export const addWatched = async (req, res) => {
   try {
     // console.log("Add to watched");
-    let user_email = req.user.email;
+    const user_email = req.user.email;
 
-    let watched_obj = req.body;
+    const watched_obj = req.body;
     let already_exists;
 
-    let data = {
+    const data = {
       content_id: watched_obj.content_id,
       type: watched_obj.type,
       time: new Date(),
     };
 
-    let match = {
+    const match = {
       content_id: watched_obj.content_id,
       type: watched_obj.type,
     };
@@ -120,10 +120,10 @@ export const addWatched = async (req, res) => {
 
 export const getWatchlist = async (req, res) => {
   try {
-    let user_email = req.user.email;
-    let watchlist_obj = await UserModel.findOne({ email: user_email });
+    const user_email = req.user.email;
+    const watchlist_obj = await UserModel.findOne({ email: user_email });
 
-    let watchlist_data = watchlist_obj.watchlist;
+    const watchlist_data = watchlist_obj.watchlist;
 
     res.send(watchlist_data);
   } catch (err) {
@@ -134,9 +134,9 @@ export const getWatchlist = async (req, res) => {
 export const addToWatchlist = async (req, res) => {
   try {
     const user_email = req.user.email;
-    let c_id = req.body.content_id;
+    const c_id = req.body.content_id;
     const c_type = req.body.type;
-    let data = {
+    const data = {
       content_id: c_id,
       type: c_type,
     };
@@ -156,9 +156,9 @@ export const addToWatchlist = async (req, res) => {
 export const removeWatchlist = async (req, res) => {
   try {
     const user_email = req.user.email;
-    let c_id = req.body.content_id;
+    const c_id = req.body.content_id;
     const c_type = req.body.type;
-    let remove = await UserModel.updateOne(
+    const remove = await UserModel.updateOne(
       { email: user_email },
       {
         $pull: {
@@ -178,8 +178,8 @@ export const removeWatchlist = async (req, res) => {
 };
 
 export const deleteWatched = async (req, res) => {
-  let user_data = req.body;
-  let delete_watched = await UserModel.updateOne(
+  const user_data = req.body;
+  await UserModel.updateOne(
     { email: user_data.email },
     {
       $pull: {

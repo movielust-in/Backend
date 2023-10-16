@@ -9,6 +9,7 @@ import {
   getAvatars,
 } from "../controllers/admin.controller.js";
 
+// eslint-disable-next-line new-cap
 const adminRouter = Router();
 
 adminRouter.get("/avatar/getall", getAvatars);

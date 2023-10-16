@@ -13,6 +13,7 @@ import {
 
 import authMiddleware from "../middlewares/auth.middleware.js";
 
+// eslint-disable-next-line new-cap
 const userRouter = Router();
 
 userRouter.use(authMiddleware);

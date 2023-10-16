@@ -1,4 +1,4 @@
-import { connect, set } from 'mongoose';
+import { connect, set } from "mongoose";
 
 export const connectDB = async () =>
 
@@ -14,5 +14,4 @@ export const connectDB = async () =>
                 throw new Error(err);
             }
         })();
-    })
-
+    });

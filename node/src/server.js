@@ -1,8 +1,8 @@
 import dotenv from "dotenv";
 
 import app from "./app.js";
-import { connectDB } from "./helpers/db.js";
-import { verifyTransport } from "./helpers/nodemailer.js";
+import { connectDB } from "./utils/db.js";
+import { verifyTransport } from "./utils/nodemailer.js";
 
 dotenv.config();
 

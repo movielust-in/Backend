@@ -1,6 +1,6 @@
 import axios from "axios";
 import { Movie } from "../models/torrent.model.js";
-import { magnetFromHash } from "../helpers/magnetFromHash.js";
+import { magnetFromHash } from "../utils/magnetFromHash.js";
 
 export const YTSMovieMagnet = async (req, res) => {
   try {

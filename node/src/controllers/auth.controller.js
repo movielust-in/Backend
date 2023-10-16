@@ -6,9 +6,9 @@ import { promises as fs } from "node:fs";
 import Otp from "../models/auth.model.js";
 import { UserModel } from "../models/user.model.js";
 import AdminSchema from "../models/admin.model.js";
-import { sendMail } from "../helpers/nodemailer.js";
+import { sendMail } from "../utils/nodemailer.js";
 
-//------------------------------ Send OTP to verify Email  ---------------------------------------------
+// ------------------------------ Send OTP to verify Email  ---------------------------------------------
 
 export const sendOtp = async (req, res) => {
   try {
@@ -19,14 +19,14 @@ export const sendOtp = async (req, res) => {
     let html;
 
     if (user_credentials.type === "SIGNUP") {
-      let check_user = await UserModel.findOne({ email: user_email });
+      const check_user = await UserModel.findOne({ email: user_email });
 
       if (check_user != null) {
         return res.send("Email already exists").end();
       }
       html = await fs.readFile("src/views/verifyOtp.html", "utf8");
     } else if (user_credentials.type === "resetpassword") {
-      let check_user = await UserModel.findOne({ email: user_email });
+      const check_user = await UserModel.findOne({ email: user_email });
       if (check_user == null) {
         return res.send("E-mail not found").end();
       } else {
@@ -38,37 +38,37 @@ export const sendOtp = async (req, res) => {
 
     console.log(typeof html);
 
-    let template = handlebars.compile(html); //Compiling HTML file
+    const template = handlebars.compile(html); // Compiling HTML file
 
-    let gen_otp = Math.floor(100000 + Math.random() * 900000); // Generate OTP
+    const gen_otp = Math.floor(100000 + Math.random() * 900000); // Generate OTP
 
-    let oldDateObj = new Date(new Date());
-    let newDateObj = new Date(new Date().getTime());
+    const oldDateObj = new Date(new Date());
+    const newDateObj = new Date(new Date().getTime());
     newDateObj.setTime(oldDateObj.getTime() + 10 * 60 * 1000);
 
     // ------ Delete OTP for same Email from database -------------
     await Otp.deleteMany({ email: user_email });
 
-    let mail_data = {
+    const mail_data = {
       username: user_name,
       otp: gen_otp,
     };
-    let htmlToSend = template(mail_data); //sending data to HTML template
+    const htmlToSend = template(mail_data); // sending data to HTML template
 
-    //----------------- Insert OTP to database --------------------
-    let data = {
+    // ----------------- Insert OTP to database --------------------
+    const data = {
       email: user_email,
       otp: gen_otp,
       type: user_type,
       exp: newDateObj,
     };
 
-    let insert_otp = new Otp(data);
+    const insert_otp = new Otp(data);
     insert_otp.save(function (err, res) {
       if (err) return console.error(err);
     });
 
-    //----------------- Send mail with nodemailer ------------------
+    // ----------------- Send mail with nodemailer ------------------
     if (user_credentials.type == "SIGNUP") {
       sendMail(user_email, htmlToSend, "OTP to verify your email");
     } else {
@@ -82,13 +82,13 @@ export const sendOtp = async (req, res) => {
   }
 };
 
-//-------------------------- Verify EMAIL OTP -------------------------------------------------------------------
+// -------------------------- Verify EMAIL OTP -------------------------------------------------------------------
 export const verifyOTP = async (req, res) => {
   try {
     // console.log("*****| Verifying OTP |*****");
     const info = req.body;
 
-    let newDateObj = new Date();
+    const newDateObj = new Date();
 
     let isExpired;
     let isVerified;
@@ -124,18 +124,18 @@ export const verifyOTP = async (req, res) => {
   }
 };
 
-//------------------------------------ Sign Up(REGISTER) ------------------------------------------------
+// ------------------------------------ Sign Up(REGISTER) ------------------------------------------------
 export const createAccount = async (req, res) => {
   try {
     // console.log("*****|  New Account resgistering |*****");
 
-    let data = req.body;
-    let user_name = data.name;
-    let user_email = data.email;
-    let user_password = data.password;
-    let user_profile = data.profile;
+    const data = req.body;
+    const user_name = data.name;
+    const user_email = data.email;
+    const user_password = data.password;
+    const user_profile = data.profile;
 
-    let check_email = await UserModel.findOne({
+    const check_email = await UserModel.findOne({
       email: data.email,
     });
 
@@ -145,7 +145,7 @@ export const createAccount = async (req, res) => {
 
     const hash_password = await bcrypt.hash(user_password, 10);
 
-    let searchLastid = await UserModel.findOne(
+    const searchLastid = await UserModel.findOne(
       {},
       {},
       { sort: { created_at: -1 } }
@@ -153,7 +153,7 @@ export const createAccount = async (req, res) => {
 
     const lastUserId = searchLastid ? searchLastid.id + 1 : 1;
 
-    let user = {
+    const user = {
       id: lastUserId,
       name: user_name,
       email: user_email,
@@ -163,7 +163,7 @@ export const createAccount = async (req, res) => {
       created_at: new Date(),
     };
 
-    let add_user = new UserModel(user);
+    const add_user = new UserModel(user);
 
     await add_user.save();
     res.send(true);
@@ -173,7 +173,7 @@ export const createAccount = async (req, res) => {
   }
 };
 
-//------------------------------------ Reset OTP, Verification ------------------------------------------------
+// ------------------------------------ Reset OTP, Verification ------------------------------------------------
 
 export const verifyResetOtp = async (otpData) => {
   try {
@@ -201,11 +201,11 @@ export const verifyResetOtp = async (otpData) => {
   }
 };
 
-//------------------------------------ Reset Password ------------------------------------------------
+// ------------------------------------ Reset Password ------------------------------------------------
 
 export const resetpassword = async (req, res) => {
   try {
-    let data = req.body;
+    const data = req.body;
     // let otp_valid = await verifyResetOtp(data);
 
     if (data) {
@@ -223,14 +223,14 @@ export const resetpassword = async (req, res) => {
   }
 };
 
-//--------------------------------------- L O G I N  --------------------------------------------------
-export async function userLogin(req, res) {
+// --------------------------------------- L O G I N  --------------------------------------------------
+export const userLogin = async (req, res) => {
   try {
     // console.log("LOGIN");
-    let user_credentials = req.body;
+    const user_credentials = req.body;
     const dateTime = new Date().getTime();
-    //search for user in database
-    let user_found = await UserModel.findOne({
+    // search for user in database
+    const user_found = await UserModel.findOne({
       email: user_credentials.email,
     });
 
@@ -252,18 +252,18 @@ export async function userLogin(req, res) {
               { email: user_credentials.email },
               { $push: { logins: new Date() } }
             );
-            let jwt_body = {
+            const jwt_body = {
               id: user_found.id,
               email: user_credentials.email,
               iat: dateTime,
               iss: "Movielust",
             };
 
-            let token = jwt.sign(jwt_body, process.env.SECRET, {
+            const token = jwt.sign(jwt_body, process.env.SECRET, {
               expiresIn: "15d",
             });
 
-            let res_data = {
+            const res_data = {
               success: true,
               message: "Logged In!",
               id: user_found.id,
@@ -289,14 +289,14 @@ export async function userLogin(req, res) {
   }
 }
 
-//---------------------------------------A D M I N   L O G I N  --------------------------------------------------
-export async function adminLogin(req, res) {
+// ---------------------------------------A D M I N   L O G I N  --------------------------------------------------
+export const adminLogin = async (req, res) => {
   try {
     // console.log("Admin LOGIN");
-    let user_credentials = req.body;
+    const user_credentials = req.body;
     const dateTime = new Date().getTime();
 
-    let user_found = await AdminSchema.findOne({
+    const user_found = await AdminSchema.findOne({
       userName: user_credentials.userName,
     });
 

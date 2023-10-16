@@ -4,7 +4,7 @@ import { Movie, TV } from "../models/torrent.model.js";
 export const getAvatars = async (req, res) => {
   try {
     // console.log("Admin is getting Avatar data");
-    let avatars = await AvatarModel.find();
+    const avatars = await AvatarModel.find();
     const data = {
       avtars: avatars,
     };
@@ -25,7 +25,7 @@ export const getAllUsers = async (req, res) => {
       visits: 0,
       logins: 0,
     };
-    let User = await UserModel.find({}, projection);
+    const User = await UserModel.find({}, projection);
     const data = {
       results: User,
     };
@@ -39,7 +39,7 @@ export const getAllMovies = async (req, res) => {
   try {
     // console.log("Admin is getting movie data");
 
-    let Movies = await Movie.find({}, { _id: 0 });
+    const Movies = await Movie.find({}, { _id: 0 });
     const data = {
       results: Movies,
     };
@@ -53,7 +53,7 @@ export const addMovie = async (req, res) => {
   try {
     // console.log("Admin is adding movie ");
 
-    let movie_data = req.body;
+    const movie_data = req.body;
     const check_exists = await Movie.findOne({ id: movie_data.id });
     if (check_exists) {
       return res.send("Already exists");
@@ -70,7 +70,7 @@ export const deleteMovie = async (req, res) => {
   try {
     // console.log("Admin is delete movie data");
 
-    let movieID = req.params.id;
+    const movieID = req.params.id;
     const check_exists = await Movie.findOne({ id: movieID });
     if (check_exists) {
       await Movie.deleteOne({ id: movieID });
@@ -86,7 +86,7 @@ export const deleteMovie = async (req, res) => {
 export const getAllTV = async (req, res) => {
   try {
     // console.log("Admin is fetching tv data");
-    let Tv_links = await TV.find({}, { _id: 0 });
+    const Tv_links = await TV.find({}, { _id: 0 });
     const data = {
       results: Tv_links,
     };
@@ -98,7 +98,7 @@ export const getAllTV = async (req, res) => {
 
 export const deleteTV = async (req, res) => {
   try {
-    let TVID = req.params.id;
+    const TVID = req.params.id;
     const check_exists = await TV.findOne({ id: TVID });
     if (check_exists) {
       await TV.deleteOne({ id: TVID });

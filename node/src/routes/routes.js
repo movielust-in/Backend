@@ -6,6 +6,7 @@ import torrentRouter from "./torrent.routes.js";
 
 import { getAllAvatar } from "../controllers/main.controller.js";
 
+// eslint-disable-next-line new-cap
 const mainRouter = Router();
 
 mainRouter.use("/admin", adminRouter);
