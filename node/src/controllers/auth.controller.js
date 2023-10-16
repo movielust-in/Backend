@@ -108,7 +108,7 @@ export const verifyOTP = async (req, res) => {
         const isExpired =
             currentDateObject.getTime() < match.exp.getTime() ? false : true;
 
-        if (isExpired == true) {
+        if (isExpired === true) {
             isVerified = false;
             return res.send('OTP Expired');
         }
@@ -270,11 +270,9 @@ export const userLogin = async (req, res) => {
 
                         res.send(res_data);
                     } else {
-                        if (!isMatch) {
-                            return res.status(404).send({
-                                message: 'Server error',
-                            });
-                        }
+                        return res.status(404).send({
+                            message: 'Server error',
+                        });
                     }
                 }
             );

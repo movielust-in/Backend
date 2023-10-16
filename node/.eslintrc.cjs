@@ -8,7 +8,9 @@ module.exports = {
         'plugin:unicorn/all',
         'plugin:import/recommended',
         'prettier',
+        'plugin:sonarjs/recommended',
     ],
+    plugins: ['unicorn', 'import', 'sonarjs'],
     overrides: [
         {
             env: {
