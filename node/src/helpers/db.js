@@ -1,16 +1,15 @@
-import { connect, set } from "mongoose";
+import { connect, set } from 'mongoose';
 
 export const connectDB = async () =>
-
     new Promise((resolve) => {
         (async () => {
             try {
-                set("strictQuery", false);
+                set('strictQuery', false);
                 await connect(process.env.DATABASE_URL);
-                console.log("Database connected.");
+                console.log('Database connected.');
                 resolve();
             } catch (err) {
-                console.log("Database error.", err);
+                console.log('Database error.', err);
                 throw new Error(err);
             }
         })();

@@ -1,28 +1,26 @@
 module.exports = {
-  'env': {
-    'browser': true,
-    'es2021': true,
-  },
-  'extends': ['google', "prettier"],
-  'overrides': [
-    {
-      'env': {
-        'node': true,
-      },
-      'files': [
-        '.eslintrc.{js,cjs}',
-      ],
-      'parserOptions': {
-        'sourceType': 'script',
-      },
+    env: {
+        browser: true,
+        es2021: true,
     },
-  ],
-  'parserOptions': {
-    'ecmaVersion': 'latest',
-    'sourceType': 'module',
-  },
-  'rules': {
-    'camelcase': 'off',
-    "require-jsdoc": "off"
-  },
+    extends: ['google', 'prettier'],
+    overrides: [
+        {
+            env: {
+                node: true,
+            },
+            files: ['.eslintrc.{js,cjs}'],
+            parserOptions: {
+                sourceType: 'script',
+            },
+        },
+    ],
+    parserOptions: {
+        ecmaVersion: 'latest',
+        sourceType: 'module',
+    },
+    rules: {
+        camelcase: 'off',
+        'require-jsdoc': 'off',
+    },
 };
