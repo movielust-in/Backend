@@ -30,8 +30,8 @@ export const getAllUsers = async (req, res) => {
             results: User,
         };
         res.send(data);
-    } catch (err) {
-        res.status(500).json({ message: err.message });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
     }
 };
 
@@ -44,8 +44,8 @@ export const getAllMovies = async (req, res) => {
             results: Movies,
         };
         res.send(data);
-    } catch (err) {
-        res.status(500).json({ message: err.message });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
     }
 };
 
@@ -61,8 +61,8 @@ export const addMovie = async (req, res) => {
             await Movie.updateOne(movie_data);
             return res.send(true);
         }
-    } catch (err) {
-        res.status(500).json({ message: err.message });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
     }
 };
 
@@ -78,8 +78,8 @@ export const deleteMovie = async (req, res) => {
         } else {
             return res.send(false);
         }
-    } catch (err) {
-        res.status(500).json({ message: err.message });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
     }
 };
 
@@ -91,8 +91,8 @@ export const getAllTV = async (req, res) => {
             results: Tv_links,
         };
         res.send(data);
-    } catch (err) {
-        res.status(500).json({ message: err.message });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
     }
 };
 
@@ -106,8 +106,8 @@ export const deleteTV = async (req, res) => {
         } else {
             return res.send(false);
         }
-    } catch (err) {
-        res.status(500).json({ message: err.message });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
     }
 };
 

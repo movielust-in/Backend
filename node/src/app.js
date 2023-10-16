@@ -12,7 +12,7 @@ app.use(json());
 app.use(helmet());
 app.use(cors());
 app.use(express.static('public'));
-app.use(morgan(process.env.NODE_ENV != 'production' ? 'dev' : 'combined'));
+app.use(morgan(process.env.NODE_ENV == 'production' ? 'combined' : 'dev'));
 
 app.use(mainRouter);
 

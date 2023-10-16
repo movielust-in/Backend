@@ -1,7 +1,7 @@
 import dotenv from 'dotenv';
 
 import app from './app.js';
-import { connectDB } from './helpers/db.js';
+import { connectDB } from './helpers/database.js';
 import { verifyTransport } from './helpers/nodemailer.js';
 
 dotenv.config();
@@ -17,11 +17,13 @@ const server = app.listen(PORT, () => {
 });
 
 const exitHandler = () => {
-    if (!server) return process.exit(1);
+    // eslint-disable-next-line unicorn/no-process-exit
+    if (!server) return process.exit();
 
     server.close(() => {
         console.log('Server closed.');
-        process.exit(1);
+        // eslint-disable-next-line unicorn/no-process-exit
+        process.exit();
     });
 };
 

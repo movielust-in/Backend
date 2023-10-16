@@ -8,9 +8,9 @@ export const connectDB = async () =>
                 await connect(process.env.DATABASE_URL);
                 console.log('Database connected.');
                 resolve();
-            } catch (err) {
-                console.log('Database error.', err);
-                throw new Error(err);
+            } catch (error) {
+                console.log('Database error.', error);
+                throw new Error(error);
             }
         })();
     });

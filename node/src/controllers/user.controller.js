@@ -39,8 +39,8 @@ export const updateAvatar = async (req, res) => {
             { $set: { profile: link.link } }
         );
         return res.send(true);
-    } catch (err) {
-        res.status(500).json({ message: err.message });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
     }
 };
 
@@ -60,9 +60,9 @@ export const getWatched = async (req, res) => {
         // console.log("Get Watched");
         const user_email = req.user.email;
 
-        const watched_obj = await UserModel.findOne({ email: user_email });
+        const watched_object = await UserModel.findOne({ email: user_email });
 
-        const watched_data = watched_obj.watched.slice(-20).reverse();
+        const watched_data = watched_object.watched.slice(-20).reverse();
 
         res.send(watched_data);
     } catch (error) {
@@ -75,25 +75,25 @@ export const addWatched = async (req, res) => {
         // console.log("Add to watched");
         const user_email = req.user.email;
 
-        const watched_obj = req.body;
+        const watched_object = req.body;
         let already_exists;
 
         const data = {
-            content_id: watched_obj.content_id,
-            type: watched_obj.type,
+            content_id: watched_object.content_id,
+            type: watched_object.type,
             time: new Date(),
         };
 
         const match = {
-            content_id: watched_obj.content_id,
-            type: watched_obj.type,
+            content_id: watched_object.content_id,
+            type: watched_object.type,
         };
 
-        if (watched_obj.type === 'tv') {
-            (data['season'] = watched_obj.season.toString()),
-                (data['episode'] = watched_obj.episode.toString()),
-                (match['season'] = watched_obj.season),
-                (match['episode'] = watched_obj.episode);
+        if (watched_object.type === 'tv') {
+            (data['season'] = watched_object.season.toString()),
+                (data['episode'] = watched_object.episode.toString()),
+                (match['season'] = watched_object.season),
+                (match['episode'] = watched_object.episode);
         }
 
         already_exists = await UserModel.find({
@@ -103,7 +103,7 @@ export const addWatched = async (req, res) => {
 
         if (already_exists.length > 0) {
             return res.send(false);
-        } else if (already_exists.length == 0) {
+        } else if (already_exists.length === 0) {
             already_exists = await UserModel.updateOne(
                 { email: user_email },
                 { $push: { watched: data } }
@@ -121,13 +121,13 @@ export const addWatched = async (req, res) => {
 export const getWatchlist = async (req, res) => {
     try {
         const user_email = req.user.email;
-        const watchlist_obj = await UserModel.findOne({ email: user_email });
+        const watchlist_object = await UserModel.findOne({ email: user_email });
 
-        const watchlist_data = watchlist_obj.watchlist;
+        const watchlist_data = watchlist_object.watchlist;
 
         res.send(watchlist_data);
-    } catch (err) {
-        res.status(500).json({ message: err.message });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
     }
 };
 
@@ -148,8 +148,8 @@ export const addToWatchlist = async (req, res) => {
         if (add) {
             res.send(true);
         }
-    } catch (err) {
-        res.status(500).json({ message: err.message });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
     }
 };
 
@@ -172,8 +172,8 @@ export const removeWatchlist = async (req, res) => {
         if (remove) {
             res.send(true);
         }
-    } catch (err) {
-        res.status(err).json({ message: err.message });
+    } catch (error) {
+        res.status(error).json({ message: error.message });
     }
 };
 

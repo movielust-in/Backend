@@ -43,11 +43,11 @@ export const sendOtp = async (req, res) => {
 
         const template = handlebars.compile(html); // Compiling HTML file
 
-        const gen_otp = Math.floor(100000 + Math.random() * 900000); // Generate OTP
+        const gen_otp = Math.floor(100_000 + Math.random() * 900_000); // Generate OTP
 
-        const oldDateObj = new Date(new Date());
-        const newDateObj = new Date(new Date().getTime());
-        newDateObj.setTime(oldDateObj.getTime() + 10 * 60 * 1000);
+        const oldDateObject = new Date(new Date());
+        const currentDateObject = new Date(Date.now());
+        currentDateObject.setTime(oldDateObject.getTime() + 10 * 60 * 1000);
 
         // ------ Delete OTP for same Email from database -------------
         await Otp.deleteMany({ email: user_email });
@@ -63,12 +63,12 @@ export const sendOtp = async (req, res) => {
             email: user_email,
             otp: gen_otp,
             type: user_type,
-            exp: newDateObj,
+            exp: currentDateObject,
         };
 
         const insert_otp = new Otp(data);
-        insert_otp.save(function (err, res) {
-            if (err) return console.error(err);
+        insert_otp.save(function (error, res) {
+            if (error) return console.error(error);
         });
 
         // ----------------- Send mail with nodemailer ------------------
@@ -91,9 +91,8 @@ export const verifyOTP = async (req, res) => {
         // console.log("*****| Verifying OTP |*****");
         const info = req.body;
 
-        const newDateObj = new Date();
+        const currentDateObject = new Date();
 
-        let isExpired;
         let isVerified;
 
         const match = await Otp.findOne({
@@ -106,11 +105,8 @@ export const verifyOTP = async (req, res) => {
             return res.send('Wrong OTP');
         }
 
-        if (newDateObj.getTime() < match.exp.getTime()) {
-            isExpired = false;
-        } else {
-            isExpired = true;
-        }
+        const isExpired =
+            currentDateObject.getTime() < match.exp.getTime() ? false : true;
 
         if (isExpired == true) {
             isVerified = false;
@@ -191,7 +187,7 @@ export const verifyResetOtp = async (otpData) => {
             res.status(404).send('Not found');
         }
 
-        if (new Date().getTime() > match.exp.getTime()) {
+        if (Date.now() > match.exp.getTime()) {
             return { verified: false, error: 'OTP Expired' };
         }
 
@@ -199,7 +195,7 @@ export const verifyResetOtp = async (otpData) => {
             await Otp.deleteMany({ email: otpData.email });
             return { verified: true };
         }
-    } catch (error) {
+    } catch {
         return { verified: false, error: 'Something went wrong!' };
     }
 };
@@ -231,21 +227,17 @@ export const userLogin = async (req, res) => {
     try {
         // console.log("LOGIN");
         const user_credentials = req.body;
-        const dateTime = new Date().getTime();
+        const dateTime = Date.now();
         // search for user in database
         const user_found = await UserModel.findOne({
             email: user_credentials.email,
         });
 
-        if (!user_found) {
-            return res.status(400).send({
-                message: 'User not found.',
-            });
-        } else {
+        if (user_found) {
             bcrypt.compare(
                 user_credentials.password,
                 user_found.password,
-                async function (err, isMatch) {
+                async function (error, isMatch) {
                     if (!isMatch) {
                         return res.status(400).send({
                             message: 'Wrong Password!',
@@ -286,6 +278,10 @@ export const userLogin = async (req, res) => {
                     }
                 }
             );
+        } else {
+            return res.status(400).send({
+                message: 'User not found.',
+            });
         }
     } catch (error) {
         res.status(500).json({ message: error.message });
@@ -297,17 +293,13 @@ export const adminLogin = async (req, res) => {
     try {
         // console.log("Admin LOGIN");
         const user_credentials = req.body;
-        const dateTime = new Date().getTime();
+        const dateTime = Date.now();
 
         const user_found = await AdminSchema.findOne({
             userName: user_credentials.userName,
         });
 
-        if (!user_found) {
-            return res.status(400).send({
-                message: 'User not found.',
-            });
-        } else {
+        if (user_found) {
             if (user_credentials.password === user_found.password) {
                 const jwt_body = {
                     userName: user_found.userName,
@@ -329,6 +321,10 @@ export const adminLogin = async (req, res) => {
             } else {
                 res.send(false);
             }
+        } else {
+            return res.status(400).send({
+                message: 'User not found.',
+            });
         }
     } catch (error) {
         res.status(500).json({ message: error.message });

@@ -3,7 +3,12 @@ module.exports = {
         browser: true,
         es2021: true,
     },
-    extends: ['google', 'prettier'],
+    extends: [
+        'google',
+        'plugin:unicorn/all',
+        'plugin:import/recommended',
+        'prettier',
+    ],
     overrides: [
         {
             env: {
@@ -22,5 +27,18 @@ module.exports = {
     rules: {
         camelcase: 'off',
         'require-jsdoc': 'off',
+        'unicorn/no-null': 'off',
+        'unicorn/prevent-abbreviations': [
+            'error',
+            {
+                allowList: {
+                    Param: true,
+                    Req: true,
+                    Res: true,
+                    req: true,
+                    res: true,
+                },
+            },
+        ],
     },
 };

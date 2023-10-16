@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { Movie } from '../models/torrent.model.js';
-import { magnetFromHash } from '../helpers/magnetFromHash.js';
+import { magnetFromHash } from '../helpers/magnet-from-hash.js';
 
 export const YTSMovieMagnet = async (req, res) => {
     try {
@@ -44,7 +44,7 @@ export const YTSMovieMagnet = async (req, res) => {
         );
 
         return res.send(mangets);
-    } catch (err) {
-        res.status(500).json({ message: err.message });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
     }
 };

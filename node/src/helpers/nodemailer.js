@@ -40,9 +40,9 @@ export const verifyTransport = async () =>
                 await transporter.verify();
                 console.log('Mail server verified.');
                 resolve();
-            } catch (err) {
-                console.log('Mail server error:', err);
-                throw new Error(err);
+            } catch (error) {
+                console.log('Mail server error:', error);
+                throw new Error(error);
             }
         })();
     });
