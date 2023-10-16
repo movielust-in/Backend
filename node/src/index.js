@@ -20,7 +20,6 @@ app.use(helmet());
 app.use(cors());
 app.set("view engine", "ejs");
 app.use(express.static("public"));
-app.use(json());
 app.use(morgan(process.env.NODE_ENV != "production" ? "dev" : "combined"));
 
 app.use(mainRouter);
