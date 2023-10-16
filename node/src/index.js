@@ -5,7 +5,7 @@ import dotenv from "dotenv";
 import express, { json } from "express";
 import { connect, set as mongooseSet } from "mongoose";
 
-import { transporter } from "./utils/nodemailer.js";
+import { transporter } from "./helpers/nodemailer.js";
 import mainRouter from "./routes/routes.js";
 import flaskProxy from "./middlewares/flask-proxy.middleware.js";
 
