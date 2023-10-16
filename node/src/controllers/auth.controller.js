@@ -1,11 +1,12 @@
 import jwt from "jsonwebtoken";
 import handlebars from "handlebars";
+import bcrypt from "bcryptjs";
 import { promises as fs } from "node:fs";
+
 import Otp from "../models/auth.model.js";
 import { UserModel } from "../models/user.model.js";
 import AdminSchema from "../models/admin.model.js";
 import { sendMail } from "../helpers/nodemailer.js";
-import bcrypt from "bcryptjs";
 
 //------------------------------ Send OTP to verify Email  ---------------------------------------------
 

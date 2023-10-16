@@ -18,7 +18,6 @@ const app = express();
 app.use(json());
 app.use(helmet());
 app.use(cors());
-app.set("view engine", "ejs");
 app.use(express.static("public"));
 app.use(morgan(process.env.NODE_ENV != "production" ? "dev" : "combined"));
 
