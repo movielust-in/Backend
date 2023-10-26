@@ -1,0 +1,17 @@
+{
+    "name": "imdb_ratings_to_mongo",
+    "version": "1.0.0",
+    "description": "Standlone script to insert to IMDB ratings for movies in Mongo.",
+    "main": "job.js",
+    "type": "module",
+    "scripts": {
+        "start": "node job.js"
+    },
+    "author": "Anurag Parmar",
+    "license": "ISC",
+    "dependencies": {
+        "csv": "^6.3.5",
+        "mongoose": "^7.6.3",
+        "zlib": "^1.0.5"
+    }
+}
