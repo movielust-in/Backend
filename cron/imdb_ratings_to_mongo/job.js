@@ -15,7 +15,7 @@ const ratings = [];
 
 console.log("🚀 Connecting to databse....");
 
-await connectDatabase("mongodb://127.0.0.1:27017/moviebase");
+await connectDatabase(process.env.DB_URL);
 
 console.log("✅ Connected to databse.");
 
