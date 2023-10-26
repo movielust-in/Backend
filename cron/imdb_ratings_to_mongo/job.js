@@ -49,15 +49,13 @@ console.log("🚀 Inserting new ratings in database....");
 
 await imdbRating.insertMany(ratings, { lean: true, limit: null });
 
-console.log("✅ Completed: Inseting new ratings in database.");
+console.log("✅ Completed: Inserting new ratings in database.");
 
 closeDatabaseConnection();
 
 const timeDelta = Date.now() - startTime;
 
-console.log(
-  `🔥 Job completed in ${millisToMinutesAndSeconds(timeDelta)} seconds.`
-);
+console.log(`🔥 Job completed in ${millisToMinutesAndSeconds(timeDelta)}.`);
 
 function addRecord(data) {
   ratings.push({ imdb_id: data[0], rating: data[1], vote_count: data[2] });
