@@ -13,7 +13,7 @@ content-type: application/json
     
     "email": "01aagparmar@gmail.com",
     "name": "Nitin",
-    "password":"helloworld",
+    "password":"helloworlds",
     "profile":"iamgroot"
 }
 
